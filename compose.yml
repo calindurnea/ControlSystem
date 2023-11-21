@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+  integration-service:
+    container_name: integration-service
+    build:
+      dockerfile: ./IntegrationService.Dockerfile
+    pull_policy: always
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RabbitMQ__Hostname=rabbitmq
+    depends_on:
+      - rabbitmq
+
+  order-service:
+    container_name: order-service
+    build:
+      dockerfile: ./OrderService.Dockerfile
+    pull_policy: always
+    restart: always
+    environment:
+      # Server - Framework settings
+      - DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+      - ASPNETCORE_URLS=http://+:80;
+      - ASPNETCORE_ENVIRONMENT=Development
+      # Server - Application settings
+      - ConnectionStrings__OrdersContext=host=postgresql;port=5432;database=orders_db;username=postgres;password=Pass@word
+      - RabbitMQ__Hostname=rabbitmq
+    ports:
+      - "5002:80"
+    depends_on:
+      - rabbitmq
+      - postgresql
+
+  postgresql:
+    container_name: postgresql_local
+    image: postgres:15
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Pass@word
+      - POSTGRES_DB=orders_db
+    ports:
+      - "8002:5432"
+    volumes:
+      - ./local/postgresql_data:/var/lib/postgresql/data
+
+  rabbitmq:
+    container_name: rabbitmq-controlsystem
+    image: rabbitmq:management
+    hostname: rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
