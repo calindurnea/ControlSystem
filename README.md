@@ -35,4 +35,5 @@ System based on a microservices architecture that enables for a standardized com
         └── Libraries.Common
             └── Events
 # Message flow diagram
-![image](https://github.com/calindurnea/trialControlSystem/assets/17986810/bf178172-a69e-4991-a34d-a2e1095629b6)
+![image](https://github.com/calindurnea/ControlSystem/assets/17986810/994dc2c3-bbee-4987-b21f-c3140212eae2)
+
