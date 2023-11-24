@@ -2,6 +2,8 @@
 
 System based on a microservices architecture that enables for a standardized communication between operations team from Manufacturing and Warehouse facilities and AMR (Autonomous Mobile Robot) or AGV (Automated Guided Vehicle) providers.
 
+https://miro.com/app/board/uXjVNL0TE5g=/?share_link_id=31486949280
+
 # Installation
 ## Dependencies
 - Docker
